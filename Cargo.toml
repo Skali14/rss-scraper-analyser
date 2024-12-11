@@ -11,3 +11,4 @@ config_reader = {path = "./config_reader"}
 wordcloud-rs = "0.1.15"
 serde = { version = "1.0.215", features = ["derive"] }
 text_io = "0.1.12"
+regex = "1.11.1"

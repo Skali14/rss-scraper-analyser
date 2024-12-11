@@ -18,6 +18,12 @@ impl Debug for NewsArticle {
     }
 }
 
+impl Default for NewsArticle {
+    fn default() -> Self {
+        NewsArticle {headline: String::from("Default"), date: String::from("Default"), url: String::from("Default"), subject: String::from("Default")}
+    }
+}
+
 impl Clone for NewsArticle {
     fn clone(&self) -> Self {
         NewsArticle {
