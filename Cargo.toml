@@ -9,3 +9,5 @@ roxmltree = "0.20.0"
 serde_json = "1.0.133"
 config_reader = {path = "./config_reader"}
 wordcloud-rs = "0.1.15"
+serde = { version = "1.0.215", features = ["derive"] }
+text_io = "0.1.12"

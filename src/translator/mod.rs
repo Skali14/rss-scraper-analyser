@@ -1,6 +1,7 @@
 use reqwest;
 use serde_json::json;
-use config_reader::read_value;
+use config_reader;
+use serde::{Deserialize, Serialize};
 
 pub fn translate(texts: Vec<String>, from_lang: FromLanguage, to_lang: ToLanguage) -> Vec<String> {
     /*let item = json!({
@@ -18,18 +19,25 @@ pub fn translate(texts: Vec<String>, from_lang: FromLanguage, to_lang: ToLanguag
     let client = reqwest::blocking::Client::new();
 
     let body = client.post("https://api-free.deepl.com/v2/translate")
-        .header("Authorization", format!("DeepL-Auth-Key {}", read_value("DEEPL_API_KEY")))
+        .header("Authorization", format!("DeepL-Auth-Key {}", config_reader::read_value("DEEPLAPIKEY")))
         .header("Host", "api-free.deepl.com")
         .header("User-Agent", "testApp/1.2.3")
         .header("Content-Type", "application/json")
         .body(item.to_string());
 
-    let response = body.send().unwrap();
+    let response: Response = serde_json::from_str(body.send().unwrap().text().unwrap().as_str()).unwrap();
 
-    println!("{}", response.text().unwrap());
+    response.translations.iter().map(|x| {x.text.to_owned()}).collect()
+}
 
+#[derive(Serialize, Deserialize, Debug)]
+struct Response {
+    translations: Vec<Translation>
+}
 
-    Vec::new()
+#[derive(Serialize, Deserialize, Debug)]
+struct Translation {
+    text: String
 }
 
 pub enum FromLanguage {

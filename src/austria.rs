@@ -16,7 +16,7 @@ fn get_rss_feeds() -> (Vec<String>, Vec<String>) {
     (results_normal, results_abnormal)
 }
 
-pub fn get_articles() -> Vec<NewsArticle> {
+fn get_articles() -> Vec<NewsArticle> {
     let (feeds_normal, feeds_abnormal) = get_rss_feeds();
     let mut articles: Vec<NewsArticle> = Vec::default();
     for feed in feeds_normal {
@@ -45,17 +45,19 @@ pub fn get_articles() -> Vec<NewsArticle> {
             }
         }
     }
-
-    let mut headlines: Vec<String> = Vec::default();
-    for article in &articles {
-        headlines.push(article.clone().headline);
-    }
-
-    translator::translate(headlines, FromLanguage::DE, ToLanguage::ENUS);
-
     articles.clone().to_vec()
 }
 
-fn get_article_text_from_url(url: String) {
+pub fn get_headlines(translated: bool) -> Vec<String> {
 
+    let mut headlines: Vec<String> = Vec::default();
+    for article in get_articles() {
+        headlines.push(article.clone().headline.replace("“", "").replace("„", "").to_string());
+    }
+
+    if translated {
+        translator::translate(headlines, FromLanguage::DE, ToLanguage::ENUS)
+    } else {
+        headlines
+    }
 }
