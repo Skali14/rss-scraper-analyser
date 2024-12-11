@@ -6,5 +6,5 @@ fn get_rss_feed() {
 
 pub fn parse_rss_feed() {
     get_rss_feed();
-    translator::translate(todo!());
+    //translator::translate(todo!());
 }

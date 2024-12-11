@@ -4,7 +4,10 @@ mod germany;
 mod france;
 mod translator;
 mod sentiment_analysis;
+mod article;
 
 fn main() {
-    println!("Hello, world!");
+    let test = austria::get_articles();
+    println!("{}", test.len());
+    //dbg!(test);
 }
