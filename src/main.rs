@@ -25,6 +25,6 @@ fn main() {
             _ => println!("Please try again!")
         }
     }*/
-    let test = germany::get_headlines(false);
+    let test = france::get_headlines(false);
     dbg!(test);
 }
