@@ -10,10 +10,11 @@ using the deepL API (toggleable), and then analyze the news in different ways:
 - https://rss.orf.at/
 - https://www.tagesschau.de/infoservices/rssfeeds
 - https://www.francetvinfo.fr/rss/
+- https://ct24.ceskatelevize.cz/rss/tema/vyber-redakce-84313
 
 ### Planned RSS Feeds
 
-- https://ct24.ceskatelevize.cz/rss/tema/vyber-redakce-84313
+
 
 ## Installation
 1. Install [rustup](https://rustup.rs/)

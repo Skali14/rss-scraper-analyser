@@ -27,7 +27,7 @@ fn get_articles() -> Vec<NewsArticle> {
 pub fn get_headlines(translate: bool) -> Vec<String> {
     let mut headlines: Vec<String> = Vec::default();
     for article in get_articles() {
-        headlines.push(article.clone().headline.replace("\"", "").to_string());
+        headlines.push(article.clone().headline.replace("„", "").replace("“", "").to_string());
     }
     if translate {
         translator::translate(headlines, FromLanguage::CS, ToLanguage::ENUS)
