@@ -2,6 +2,7 @@ use regex::Regex;
 use crate::translator;
 use crate::article::NewsArticle;
 use crate::translator::{FromLanguage, ToLanguage};
+use crate::vader_sentiment::get_sentiment_value_single;
 
 fn get_rss_feeds() -> Vec<String> {
 
@@ -13,7 +14,7 @@ fn get_rss_feeds() -> Vec<String> {
     results
 }
 
-fn get_articles() -> Vec<NewsArticle> {
+pub fn get_articles() -> Vec<NewsArticle> {
     let feeds = get_rss_feeds();
     let mut articles: Vec<NewsArticle> = Vec::default();
     let category_regex = Regex::new(r"https://www\.francetvinfo\.fr/([^/]+)/").unwrap();
@@ -39,7 +40,7 @@ fn get_articles() -> Vec<NewsArticle> {
     articles
 }
 
-pub fn get_headlines(translate: bool) -> Vec<String> {
+/*pub fn get_headlines(translate: bool) -> Vec<String> {
     let mut headlines: Vec<String> = Vec::default();
     for article in get_articles() {
         headlines.push(article.clone().headline.replace("\"", "").replace("\u{a0}", " ").to_string());
@@ -49,4 +50,4 @@ pub fn get_headlines(translate: bool) -> Vec<String> {
     } else {
         headlines
     }
-}
+}*/

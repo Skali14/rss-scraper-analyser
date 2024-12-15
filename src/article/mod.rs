@@ -1,10 +1,28 @@
 use std::fmt::{Debug, Formatter, Pointer};
+use regex::Regex;
+use crate::translator;
+use crate::translator::{FromLanguage, ToLanguage};
 
 pub struct NewsArticle {
     pub(crate) headline: String,
     pub(crate) date: String,
     pub(crate) url: String,
-    pub(crate) subject: String
+    pub(crate) subject: String,
+}
+
+impl NewsArticle {
+    pub fn extract_headlines(articles: Vec<NewsArticle>, translate: bool) -> Vec<String> {
+        let re = Regex::new(r"[^a-zA-Z0-9\s]").unwrap();
+        if translate {
+            translator::translate(articles.into_iter()
+                .map(|article| re.replace_all(&article.headline, "").to_string())
+                .collect(), ToLanguage::ENUS)
+        } else {
+            articles.into_iter()
+                .map(|article| re.replace_all(&article.headline, "").to_string())
+                .collect()
+        }
+    }
 }
 
 impl Debug for NewsArticle {
@@ -30,7 +48,7 @@ impl Clone for NewsArticle {
             headline: self.headline.clone(),
             date: self.date.clone(),
             url: self.url.clone(),
-            subject: self.subject.clone()
+            subject: self.subject.clone(),
         }
     }
 }

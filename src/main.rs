@@ -6,8 +6,12 @@ mod translator;
 mod openai;
 mod article;
 mod wordcloud;
+mod azure_sentiment;
+mod vader_sentiment;
 
 use text_io::read;
+use crate::article::NewsArticle;
+use crate::azure_sentiment::get_sentiment_scores;
 use crate::wordcloud::generate_wordcloud;
 
 fn main() {
@@ -27,8 +31,12 @@ fn main() {
             _ => println!("Please try again!")
         }
     }*/
-    generate_wordcloud(austria::get_headlines(true), "austria_wordcloud.png");
-    generate_wordcloud(germany::get_headlines(true), "germany_wordcloud.png");
-    generate_wordcloud(czechia::get_headlines(true), "czechia_wordcloud.png");
-    generate_wordcloud(france::get_headlines(true), "france_wordcloud.png");
+    //dbg!(austria::get_headlines(false));
+    dbg!(vader_sentiment::get_sentiment_value_multiple(NewsArticle::extract_headlines(austria::get_articles(), true)));
+    //dbg!(vader_sentiment::get_sentiment_value_single(&String::from("The weather is really bad today")));
+    //dbg!(get_sentiment_scores(austria::get_headlines(false)));
+    /*generate_wordcloud(austria::get_headlines(false), "austria_wordcloud.png");
+    generate_wordcloud(germany::get_headlines(false), "germany_wordcloud.png");
+    generate_wordcloud(czechia::get_headlines(false), "czechia_wordcloud.png");
+    generate_wordcloud(france::get_headlines(false), "france_wordcloud.png");*/
 }

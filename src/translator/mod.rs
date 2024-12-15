@@ -3,10 +3,9 @@ use serde_json::json;
 use config_reader;
 use serde::{Deserialize, Serialize};
 
-pub fn translate(texts: Vec<String>, from_lang: FromLanguage, to_lang: ToLanguage) -> Vec<String> {
+pub fn translate(texts: Vec<String>, to_lang: ToLanguage) -> Vec<String> {
     let item = json!({
         "text": texts,
-        "source_lang": from_lang.to_string(),
         "target_lang": to_lang.to_string()
     });
 
