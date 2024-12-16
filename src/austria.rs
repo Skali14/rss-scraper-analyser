@@ -1,7 +1,4 @@
-use crate::translator;
 use crate::article::NewsArticle;
-use crate::translator::{FromLanguage, ToLanguage};
-use crate::vader_sentiment::get_sentiment_value_single;
 
 fn get_rss_feeds() -> (Vec<String>, Vec<String>) {
     let urls_normal = vec!["https://rss.orf.at/news.xml", "https://rss.orf.at/sport.xml", "https://rss.orf.at/oe3.xml", "https://rss.orf.at/fm4.xml"];
@@ -47,17 +44,3 @@ pub fn get_articles() -> Vec<NewsArticle> {
     }
     articles.clone().to_vec()
 }
-
-/*pub fn get_headlines(translate: bool) -> Vec<String> {
-
-    let mut headlines: Vec<String> = Vec::default();
-    for article in get_articles() {
-        headlines.push(article.clone().headline.replace("“", "").replace("„", "").to_string());
-    }
-
-    if translate {
-        translator::translate(headlines, FromLanguage::DE, ToLanguage::ENUS)
-    } else {
-        headlines
-    }
-}*/

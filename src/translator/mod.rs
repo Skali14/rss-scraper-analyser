@@ -9,12 +9,6 @@ pub fn translate(texts: Vec<String>, to_lang: ToLanguage) -> Vec<String> {
         "target_lang": to_lang.to_string()
     });
 
-    /*let item = json!({
-        "text": vec!["Hallo Welt!"],
-        "source_lang": from_lang.to_string(),
-        "target_lang": to_lang.to_string()
-    });*/
-
     let client = reqwest::blocking::Client::new();
 
     let body = client.post("https://api-free.deepl.com/v2/translate")

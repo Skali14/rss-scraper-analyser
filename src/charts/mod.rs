@@ -1,9 +1,9 @@
 use charming::{component::{Axis, Title}, datatype::{Dataset, Transform}, element::{
     AxisType, SplitArea, SplitLine,
-}, series::{Boxplot}, Chart, HtmlRenderer, ImageRenderer};
+}, series::{Boxplot}, Chart, HtmlRenderer};
 use charming::component::Legend;
 
-pub fn get_chart_multiple_dataset_4(data: Vec<Vec<f64>>, countries: Vec<&str>) {
+pub fn get_chart_multiple_dataset_4(data: Vec<Vec<f64>>, countries: Vec<&str>, file_name: &str) {
     let filtered_data: Vec<Vec<f64>> = data.into_iter()
         .map(|inner_vec| inner_vec.into_iter().filter(|&x| x != 0.0).collect())
         .collect();
@@ -62,10 +62,10 @@ pub fn get_chart_multiple_dataset_4(data: Vec<Vec<f64>>, countries: Vec<&str>) {
         .series(Boxplot::new().name(countries[3]).dataset_index(7));
 
     let mut renderer = HtmlRenderer::new("boxplot", 1000, 800);
-    renderer.save(&chart, "boxplot_multiple.html").expect("Failed to save chart");
+    renderer.save(&chart, file_name).expect("Failed to save chart");
 }
 
-pub fn get_chart_single_dataset(data: Vec<f64>, country: &str) {
+pub fn get_chart_single_dataset(data: Vec<f64>, country: &str, file_name: &str) {
     let filtered_data: Vec<f64> = data.into_iter().filter(|&x| x != 0.0).collect();
 
     let data0 = vec![filtered_data];
@@ -98,5 +98,5 @@ pub fn get_chart_single_dataset(data: Vec<f64>, country: &str) {
         .series(Boxplot::new().name(country).dataset_index(1));
 
     let mut renderer = HtmlRenderer::new("boxplot", 1000, 800);
-    renderer.save(&chart, "boxplot_single.html").expect("Failed to save chart");
+    renderer.save(&chart, file_name).expect("Failed to save chart");
 }

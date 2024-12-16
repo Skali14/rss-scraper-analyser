@@ -13,6 +13,5 @@ serde = { version = "1.0.215", features = ["derive"] }
 text_io = "0.1.12"
 regex = "1.11.1"
 vader_sentiment = {path = "./vader_sentiment"}
-plotters = "0.3.7"
 charming = { version = "0.4.0", features = ["ssr"] }
 rand = "0.8.5"

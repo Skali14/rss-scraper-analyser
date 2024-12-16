@@ -1,7 +1,7 @@
-use std::fmt::{Debug, Formatter, Pointer};
+use std::fmt::{Debug, Formatter};
 use regex::Regex;
 use crate::translator;
-use crate::translator::{FromLanguage, ToLanguage};
+use crate::translator::ToLanguage;
 
 pub struct NewsArticle {
     pub(crate) headline: String,
