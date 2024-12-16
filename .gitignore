@@ -2,3 +2,5 @@
 /config_reader/target
 /.idea
 config.toml
+/vader_sentiment/target
+*.png
