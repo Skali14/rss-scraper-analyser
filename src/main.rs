@@ -9,6 +9,7 @@ mod vader_sentiment;
 mod charts;
 
 use rand::Rng;
+use std::fs;
 use text_io::read;
 use crate::article::NewsArticle;
 use crate::wordcloud::generate_wordcloud;
@@ -26,6 +27,8 @@ fn main() {
         println!("5 - Quit");
 
         let x: u32 = read!();
+
+        delete_previous_files();
 
         match x {
             1 => {
@@ -50,6 +53,25 @@ fn main() {
     }
 }
 
+fn delete_previous_files() {
+    let files_to_delete = vec![
+        "boxplot_multiple.html",
+        "boxplot_austria.html",
+        "boxplot_germany.html",
+        "boxplot_france.html",
+        "boxplot_czechia.html",
+        "all_wordcloud.png",
+        "austria_wordcloud.png",
+        "germany_wordcloud.png",
+        "france_wordcloud.png",
+        "czechia_wordcloud.png",
+    ];
+
+    for file in files_to_delete {
+        fs::remove_file(file).unwrap_or_else(|_| ());
+    }
+}
+
 fn run_complete(translate: bool) {
     let austria_articles = austria::get_articles();
     let germany_articles = germany::get_articles();
@@ -65,6 +87,8 @@ fn run_complete(translate: bool) {
     let vader_germany = get_sentiment_value_multiple(germany_hl.clone());
     let vader_france = get_sentiment_value_multiple(france_hl.clone());
     let vader_czechia = get_sentiment_value_multiple(czechia_hl.clone());
+
+    generate_wordcloud(vec![austria_hl.clone(), germany_hl.clone(), france_hl.clone(), czechia_hl.clone()].into_iter().flat_map(|v| v).collect(), "all_wordcloud.png");
 
     generate_wordcloud(austria_hl, "austria_wordcloud.png");
     generate_wordcloud(germany_hl, "germany_wordcloud.png");
@@ -103,6 +127,8 @@ fn run_demo() {
     let germany_hl = NewsArticle::extract_headlines(germany_articles, false);
     let france_hl = NewsArticle::extract_headlines(france_articles, false);
     let czechia_hl = NewsArticle::extract_headlines(czechia_articles, false);
+
+    generate_wordcloud(vec![austria_hl.clone(), germany_hl.clone(), france_hl.clone(), czechia_hl.clone()].into_iter().flat_map(|v| v).collect(), "all_wordcloud.png");
 
     generate_wordcloud(austria_hl, "austria_wordcloud.png");
     generate_wordcloud(germany_hl, "germany_wordcloud.png");

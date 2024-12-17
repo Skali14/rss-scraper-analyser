@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News Article Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="header">
+    <h1>News Site Analysis</h1>
+</div>
+
+<hr>
+
+<nav class="navbar">
+    <button id="all_button" class="nav-button" onclick="showContent(['all_wordcloud', 'boxplot_multiple'])" data-content="all">All</button>
+    <button id="austria_button" class="nav-button" onclick="showContent(['austria_wordcloud', 'boxplot_austria'])">Austria</button>
+    <button id="germany_button" class="nav-button" onclick="showContent(['germany_wordcloud', 'boxplot_germany'])">Germany</button>
+    <button id="france_button" class="nav-button" onclick="showContent(['france_wordcloud', 'boxplot_france'])">France</button>
+    <button id="czechia_button" class="nav-button" onclick="showContent(['czechia_wordcloud', 'boxplot_czechia'])">Czechia</button>
+</nav>
+
+<div id="content-container">
+    <div class="column">
+        <div class="column-title">News Headlines Wordcloud</div>
+        <img id="all_wordcloud" src="all_wordcloud.png" alt="All Wordcloud">
+        <img id="austria_wordcloud" src="austria_wordcloud.png" alt="Austria Wordcloud">
+        <img id="germany_wordcloud" src="germany_wordcloud.png" alt="Germany Wordcloud">
+        <img id="france_wordcloud" src="france_wordcloud.png" alt="France Wordcloud">
+        <img id="czechia_wordcloud" src="czechia_wordcloud.png" alt="Czechia Wordcloud">
+    </div>
+    <div class="column">
+        <div class="column-title">News Headlines Sentiment Boxplot</div>
+        <iframe id="boxplot_multiple" data-src="boxplot_multiple.html" title="Boxplot Multiple"></iframe>
+        <iframe id="boxplot_austria" data-src="boxplot_austria.html" title="Austria Boxplot"></iframe>
+        <iframe id="boxplot_germany" data-src="boxplot_germany.html" title="Germany Boxplot"></iframe>
+        <iframe id="boxplot_france" data-src="boxplot_france.html" title="France Boxplot"></iframe>
+        <iframe id="boxplot_czechia" data-src="boxplot_czechia.html" title="Czechia Boxplot"></iframe>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
