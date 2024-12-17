@@ -24,46 +24,37 @@ function showContent(contentIds) {
 
 document.addEventListener("DOMContentLoaded", function() {
     const buttons = [
-        { id: "all_button", file: "all_wordcloud.png" },
-        { id: "austria_button", file: "austria_wordcloud.png" },
-        { id: "germany_button", file: "germany_wordcloud.png" },
-        { id: "france_button", file: "france_wordcloud.png" },
-        { id: "czechia_button", file: "czechia_wordcloud.png" },
-        { id: "gb_button", file: "gb_wordcloud.png" }
+        { id: "all_button", file: "output/all_wordcloud.png" },
+        { id: "austria_button", file: "output/austria_wordcloud.png" },
+        { id: "germany_button", file: "output/germany_wordcloud.png" },
+        { id: "france_button", file: "output/france_wordcloud.png" },
+        { id: "czechia_button", file: "output/czechia_wordcloud.png" },
+        { id: "gb_button", file: "output/gb_wordcloud.png" },
+        { id: "all_button", file: "output/boxplot_multiple.html" },
+        { id: "austria_button", file: "output/boxplot_austria.html" },
+        { id: "germany_button", file: "output/boxplot_germany.html" },
+        { id: "france_button", file: "output/boxplot_france.html" },
+        { id: "czechia_button", file: "output/boxplot_czechia.html" },
+        { id: "gb_button", file: "output/boxplot_gb.html" }
     ];
 
     buttons.forEach(button => {
-        fetch(button.file, { method: 'HEAD' })
-            .then(response => {
-                if (!response.ok) {
-                    document.getElementById(button.id).style.display = 'none';
-                }
-            })
-            .catch(() => {
-                document.getElementById(button.id).style.display = 'none';
-            });
-    });
-});
+        const element = document.getElementById(button.id);
+        if (element) {
+            element.style.display = 'block';
+        }
 
-document.addEventListener("DOMContentLoaded", function() {
-    const buttons = [
-        { id: "all_button", file: "boxplot_multiple.html" },
-        { id: "austria_button", file: "boxplot_austria.html" },
-        { id: "germany_button", file: "boxplot_germany.html" },
-        { id: "france_button", file: "boxplot_france.html" },
-        { id: "czechia_button", file: "boxplot_czechia.html" },
-        { id: "gb_button", file: "boxplot_gb.html" }
-    ];
-
-    buttons.forEach(button => {
-        fetch(button.file, { method: 'HEAD' })
-            .then(response => {
-                if (!response.ok) {
-                    document.getElementById(button.id).style.display = 'none';
+        if (button.file.endsWith('.png')) {
+            const img = new Image();
+            img.onload = function() {
+                console.log("test2")
+            };
+            img.onerror = function() {
+                console.log("test3")
+                if (element) {
+                    element.style.display = 'none';
                 }
-            })
-            .catch(() => {
-                document.getElementById(button.id).style.display = 'none';
-            });
-    });
+            };
+            img.src = button.file;
+        }});
 });

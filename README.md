@@ -12,9 +12,10 @@ using the deepL API (toggleable), and then analyze the news in different ways:
 - https://www.tagesschau.de/infoservices/rssfeeds
 - https://www.francetvinfo.fr/rss/
 - https://ct24.ceskatelevize.cz/rss/tema/vyber-redakce-84313
+- https://www.bbc.co.uk/news/10628494
 
 ### Planned RSS Feeds
-- https://www.bbc.co.uk/news/10628494
+- TBD
 
 ## Installation
 1. Install [rustup](https://rustup.rs/)

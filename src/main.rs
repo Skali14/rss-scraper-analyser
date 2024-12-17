@@ -21,30 +21,36 @@ fn main() {
     loop {
         println!("Choose from these options:");
         println!("-------------------------\n");
-        println!("1 - Run RSS Feed Analyzer (complete with translation)");
-        println!("2 - Run RSS Feed Analyzer (disabled translation)");
+        println!("1 - Run RSS Feed Analyzer (complete with translation) [DEEPL API KEY NECESSARY]");
+        println!("2 - Run RSS Feed Analyzer (complete without translation)");
         println!("3 - Run RSS Feed Analyzer (only english news sites / disabled translation)");
         println!("4 - Demo (wordcloud without translation / sentiment analysis with random values)");
         println!("5 - Quit");
 
         let x: u32 = read!();
 
-        delete_previous_files();
-
         match x {
             1 => {
+                delete_previous_files();
+                create_output_folder();
                 run_complete(true);
                 break;
             }
             2 => {
+                delete_previous_files();
+                create_output_folder();
                 run_complete(false);
                 break;
             }
             3 => {
+                delete_previous_files();
+                create_output_folder();
                 run_only_en();
                 break;
             }
             4 => {
+                delete_previous_files();
+                create_output_folder();
                 run_demo();
                 break;
             }
@@ -56,23 +62,27 @@ fn main() {
 
 fn delete_previous_files() {
     let files_to_delete = vec![
-        "boxplot_multiple.html",
-        "boxplot_austria.html",
-        "boxplot_germany.html",
-        "boxplot_france.html",
-        "boxplot_czechia.html",
-        "boxplot_gb.html",
-        "all_wordcloud.png",
-        "austria_wordcloud.png",
-        "germany_wordcloud.png",
-        "france_wordcloud.png",
-        "czechia_wordcloud.png",
-        "gb_wordcloud.png",
+        "output/boxplot_multiple.html",
+        "output/boxplot_austria.html",
+        "output/boxplot_germany.html",
+        "output/boxplot_france.html",
+        "output/boxplot_czechia.html",
+        "output/boxplot_gb.html",
+        "output/all_wordcloud.png",
+        "output/austria_wordcloud.png",
+        "output/germany_wordcloud.png",
+        "output/france_wordcloud.png",
+        "output/czechia_wordcloud.png",
+        "output/gb_wordcloud.png",
     ];
 
     for file in files_to_delete {
         fs::remove_file(file).unwrap_or_else(|_| ());
     }
+}
+
+fn create_output_folder() {
+    fs::create_dir("output").unwrap_or_else(|_| ());
 }
 
 fn run_complete(translate: bool) {
@@ -94,21 +104,21 @@ fn run_complete(translate: bool) {
     let vader_czechia = get_sentiment_value_multiple(czechia_hl.clone());
     let vader_gb = get_sentiment_value_multiple(gb_hl.clone());
 
-    generate_wordcloud(vec![austria_hl.clone(), germany_hl.clone(), france_hl.clone(), czechia_hl.clone(), gb_hl.clone()].into_iter().flat_map(|v| v).collect(), "all_wordcloud.png");
+    generate_wordcloud(vec![austria_hl.clone(), germany_hl.clone(), france_hl.clone(), czechia_hl.clone(), gb_hl.clone()].into_iter().flat_map(|v| v).collect(), "output/all_wordcloud.png");
 
-    generate_wordcloud(austria_hl, "austria_wordcloud.png");
-    generate_wordcloud(germany_hl, "germany_wordcloud.png");
-    generate_wordcloud(france_hl, "france_wordcloud.png");
-    generate_wordcloud(czechia_hl, "czechia_wordcloud.png");
-    generate_wordcloud(gb_hl, "gb_wordcloud.png");
+    generate_wordcloud(austria_hl, "output/austria_wordcloud.png");
+    generate_wordcloud(germany_hl, "output/germany_wordcloud.png");
+    generate_wordcloud(france_hl, "output/france_wordcloud.png");
+    generate_wordcloud(czechia_hl, "output/czechia_wordcloud.png");
+    generate_wordcloud(gb_hl, "output/gb_wordcloud.png");
 
-    get_chart_multiple_dataset_5(vec![vader_austria.clone(), vader_germany.clone(), vader_france.clone(), vader_czechia.clone(), vader_gb.clone()], vec!["Austria", "Germany", "France", "Czechia", "Great Britain"], "boxplot_multiple.html");
+    get_chart_multiple_dataset_5(vec![vader_austria.clone(), vader_germany.clone(), vader_france.clone(), vader_czechia.clone(), vader_gb.clone()], vec!["Austria", "Germany", "France", "Czechia", "Great Britain"], "output/boxplot_multiple.html");
 
-    get_chart_single_dataset(vader_austria, "Austria", "boxplot_austria.html");
-    get_chart_single_dataset(vader_germany, "Germany", "boxplot_germany.html");
-    get_chart_single_dataset(vader_france, "France", "boxplot_france.html");
-    get_chart_single_dataset(vader_czechia, "Czechia", "boxplot_czechia.html");
-    get_chart_single_dataset(vader_gb, "Great Britain", "boxplot_gb.html")
+    get_chart_single_dataset(vader_austria, "Austria", "output/boxplot_austria.html");
+    get_chart_single_dataset(vader_germany, "Germany", "output/boxplot_germany.html");
+    get_chart_single_dataset(vader_france, "France", "output/boxplot_france.html");
+    get_chart_single_dataset(vader_czechia, "Czechia", "output/boxplot_czechia.html");
+    get_chart_single_dataset(vader_gb, "Great Britain", "output/boxplot_gb.html")
 }
 
 
@@ -119,11 +129,11 @@ fn run_only_en() {
 
     let vader_gb = get_sentiment_value_multiple(gb_hl.clone());
 
-    generate_wordcloud(gb_hl.clone(), "gb_wordcloud.png");
-    fs::copy("gb_wordcloud.png", "all_wordcloud.png").expect("copy failed");
+    generate_wordcloud(gb_hl.clone(), "output/gb_wordcloud.png");
+    fs::copy("output/gb_wordcloud.png", "output/all_wordcloud.png").expect("copy failed");
 
-    get_chart_single_dataset(vader_gb.clone(), "Great Britain", "boxplot_gb.html");
-    fs::copy("boxplot_gb.html", "boxplot_multiple.html").expect("copy failed");
+    get_chart_single_dataset(vader_gb.clone(), "Great Britain", "output/boxplot_gb.html");
+    fs::copy("output/boxplot_gb.html", "output/boxplot_multiple.html").expect("copy failed");
 }
 
 
@@ -140,13 +150,13 @@ fn run_demo() {
     let czechia_hl = NewsArticle::extract_headlines(czechia_articles, false);
     let gb_hl = NewsArticle::extract_headlines(gb_articles, false);
 
-    generate_wordcloud(vec![austria_hl.clone(), germany_hl.clone(), france_hl.clone(), czechia_hl.clone(), gb_hl.clone()].into_iter().flat_map(|v| v).collect(), "all_wordcloud.png");
+    generate_wordcloud(vec![austria_hl.clone(), germany_hl.clone(), france_hl.clone(), czechia_hl.clone(), gb_hl.clone()].into_iter().flat_map(|v| v).collect(), "output/all_wordcloud.png");
 
-    generate_wordcloud(austria_hl, "austria_wordcloud.png");
-    generate_wordcloud(germany_hl, "germany_wordcloud.png");
-    generate_wordcloud(france_hl, "france_wordcloud.png");
-    generate_wordcloud(czechia_hl, "czechia_wordcloud.png");
-    generate_wordcloud(gb_hl, "gb_wordcloud.png");
+    generate_wordcloud(austria_hl, "output/austria_wordcloud.png");
+    generate_wordcloud(germany_hl, "output/germany_wordcloud.png");
+    generate_wordcloud(france_hl, "output/france_wordcloud.png");
+    generate_wordcloud(czechia_hl, "output/czechia_wordcloud.png");
+    generate_wordcloud(gb_hl, "output/gb_wordcloud.png");
 
     let mut rng = rand::thread_rng();
     let data_multiple: Vec<Vec<f64>> = (0..5)
@@ -159,11 +169,11 @@ fn run_demo() {
     let data_single_4: Vec<f64> = (0..10).map(|_| rng.gen_range(-1.0..1.0)).collect();
     let data_single_5: Vec<f64> = (0..10).map(|_| rng.gen_range(-1.0..1.0)).collect();
 
-    get_chart_multiple_dataset_5(data_multiple, vec!["Austria", "Germany", "France", "Czechia", "Great Britain"], "boxplot_multiple.html");
+    get_chart_multiple_dataset_5(data_multiple, vec!["Austria", "Germany", "France", "Czechia", "Great Britain"], "output/boxplot_multiple.html");
 
-    get_chart_single_dataset(data_single_1, "Austria", "boxplot_austria.html");
-    get_chart_single_dataset(data_single_2, "Germany", "boxplot_germany.html");
-    get_chart_single_dataset(data_single_3, "France", "boxplot_france.html");
-    get_chart_single_dataset(data_single_4, "Czechia", "boxplot_czechia.html");
-    get_chart_single_dataset(data_single_5, "Great Britain", "boxplot_gb.html");
+    get_chart_single_dataset(data_single_1, "Austria", "output/boxplot_austria.html");
+    get_chart_single_dataset(data_single_2, "Germany", "output/boxplot_germany.html");
+    get_chart_single_dataset(data_single_3, "France", "output/boxplot_france.html");
+    get_chart_single_dataset(data_single_4, "Czechia", "output/boxplot_czechia.html");
+    get_chart_single_dataset(data_single_5, "Great Britain", "output/boxplot_gb.html");
 }
