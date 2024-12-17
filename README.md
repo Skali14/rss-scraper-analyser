@@ -14,7 +14,7 @@ using the deepL API (toggleable), and then analyze the news in different ways:
 - https://ct24.ceskatelevize.cz/rss/tema/vyber-redakce-84313
 
 ### Planned RSS Feeds
-- https://www.nytimes.com/rss
+- https://www.bbc.co.uk/news/10628494
 
 ## Installation
 1. Install [rustup](https://rustup.rs/)
