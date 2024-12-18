@@ -12,6 +12,7 @@ impl<E: Eq> Palette<E> for Vec<E> {
     }
 }
 
+#[allow(dead_code)]
 pub struct IndexedChars {
     pub indexes: Vec<usize>,
     pub chars: Vec<char>

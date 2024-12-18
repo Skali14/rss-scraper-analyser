@@ -24,7 +24,8 @@ pub fn generate_wordcloud(headlines: Vec<String>, name: &str) {
         "A", "at", "At", "have", "an", "not", "This", "this", "has", "Has", "into",
         "as", "As", "when", "do", "be", "or", "can", "after", "put", "It", "it", "Do",
         "no", "No", "Yes", "yes", "new", "old", "before", "too", "so", "by", "more",
-        "about", "why", "our", "against", "over", "two", "but"
+        "about", "why", "our", "against", "over", "two", "but", "could", "does", "up",
+        "get", "make", "must", "his"
     ].iter().cloned().map(String::from).collect();
     let tokens = tokenize(text, &exclude_words);
     let wc = WordCloud::new().generate(tokens);

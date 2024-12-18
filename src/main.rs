@@ -11,6 +11,7 @@ mod great_britain;
 
 use rand::Rng;
 use std::fs;
+use config_reader::read_value;
 use text_io::read;
 use crate::article::NewsArticle;
 use crate::wordcloud::generate_wordcloud;
@@ -21,16 +22,20 @@ fn main() {
     loop {
         println!("Choose from these options:");
         println!("-------------------------\n");
-        println!("1 - Run RSS Feed Analyzer (complete with translation) [DEEPL API KEY NECESSARY]");
+        println!("1 - Run RSS Feed Analyzer (complete with translation) [DEEPL API KEY REQUIRED]");
         println!("2 - Run RSS Feed Analyzer (complete without translation)");
         println!("3 - Run RSS Feed Analyzer (only english news sites / disabled translation)");
-        println!("4 - Demo (wordcloud without translation / sentiment analysis with random values)");
+        println!("4 - Run Demo (wordcloud without translation / sentiment analysis with random values)");
         println!("5 - Quit");
 
         let x: u32 = read!();
 
         match x {
             1 => {
+                if read_value("DEEPLAPIKEY").eq("<INSERT API KEY HERE>") {
+                    eprintln!("DeepL Api Key is not set, aborting!");
+                    return;
+                }
                 delete_previous_files();
                 create_output_folder();
                 run_complete(true);

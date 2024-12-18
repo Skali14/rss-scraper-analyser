@@ -3,4 +3,5 @@
 /.idea
 config.toml
 /vader_sentiment/target
-*.png
+/wordcloud-rs-main/target
+/output/*

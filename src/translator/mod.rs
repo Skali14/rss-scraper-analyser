@@ -33,10 +33,12 @@ struct Translation {
     text: String
 }
 
+#[allow(dead_code)]
 pub enum FromLanguage {
     BG, CS, DA, DE, EL, EN, ES, ET, FI, FR, HU, ID, IT, JA, KO, LT, LV, NB, NL, PL, PT, RO, RU, SK, SL, SV, TR, UK, ZH
 }
 
+#[allow(dead_code)]
 pub enum ToLanguage {
     AR, BG, CS, DA, DE, EL, ENGB, ENUS, ES, ET, FI, FR, HU, ID, IT, JA, KO, LT, LV, NB, NL, PL, PTBR, PTPT, RO, RU, SK, SL, SV, TR, UK, ZH, ZHHANS, ZHHANT
 }
